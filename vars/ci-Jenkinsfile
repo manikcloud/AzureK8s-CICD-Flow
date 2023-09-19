@@ -40,7 +40,9 @@ pipeline {
     stage('Build Image') {
       container('docker') {
         steps {
-          sh "docker ps -a" 
+          script {
+            sh "docker ps -a"
+          }
         }
       }
     }
