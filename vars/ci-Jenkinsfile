@@ -28,15 +28,11 @@ pipeline {
     }
   }
   stages {
-    // stage git check out 
     stage('Build') {
-      steps {  // no container directive is needed as the maven container is the default
+      steps {
         sh "mvn clean install"
       }
     }
-    // stage build image
-    // stage tag &    stage push  
-    // specify docker container
     stage('Build Image') {
       container('docker') {
         steps {
