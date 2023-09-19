@@ -39,7 +39,9 @@ pipeline {
     // specify docker container
     stage('Build Image') {
       container('docker') {
-        sh "docker ps -a"
+        steps {
+          sh "docker ps -a" 
+        }
       }
     }
   }
