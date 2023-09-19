@@ -1,30 +1,30 @@
 pipeline {
   agent {
     kubernetes {
-      inheritFrom 'jenkins-jenkins-agent'  // all your pods will be named with this prefix, followed by a unique id
-      idleMinutes 5  // how long the pod will live after no jobs have run on it
+      inheritFrom 'jenkins-jenkins-agent'
+      idleMinutes 5
       yaml '''
         apiVersion: v1
         kind: Pod
         spec:
-          containers:  # list of containers that you want present for your build, you can define a default container in the Jenkinsfile
+          containers:
             - name: maven
               image: maven:3.5.4-jdk-8-slim
-              command: ["tail", "-f", "/dev/null"]  # this or any command that is bascially a noop is required, this is so that you don't overwrite the entrypoint of the base container
-              imagePullPolicy: Always # use cache or pull image for agent
+              command: ["tail", "-f", "/dev/null"]
+              imagePullPolicy: Always
             - name: docker
               image: docker:18.06.1
               command: ["tail", "-f", "/dev/null"]
               imagePullPolicy: Always
               volumeMounts:
                 - name: docker
-                  mountPath: /var/run/docker.sock # We use the k8s host docker engine
+                  mountPath: /var/run/docker.sock
           volumes:
             - name: docker
               hostPath:
                 path: /var/run/docker.sock
       '''
-      defaultContainer 'maven'  // define a default container if more than a few stages use it, will default to jnlp container
+      defaultContainer 'maven'
     }
   }
   stages {
@@ -35,8 +35,8 @@ pipeline {
     }
     stage('Build Image') {
       steps {
-        container('docker') {
-          script {
+        script {
+          container('docker') {
             sh "docker ps -a"
           }
         }
