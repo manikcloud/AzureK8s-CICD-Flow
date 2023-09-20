@@ -1,0 +1,21 @@
+pipeline {
+  agent {
+    kubernetes {
+      inheritFrom 'jenkins-jenkins-agent'
+      idleMinutes 5
+      yaml '''
+        apiVersion: v1
+        kind: Pod
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: docker
+              image: azurecicd.azurecr.io/docker:dind-az
+              imagePullPolicy: Always
+              securityContext:
+                privileged: true
+      '''
+      defaultContainer 'docker'
+    }
+  }
+  
