@@ -23,11 +23,9 @@ pipeline {
   stages {
     stage('kubctl-test') {
       steps {
-        withCredentials([string(credentialsId: "default-ns-token", variable: 'TOKEN')]) {
-          sh "kubectl --token=${TOKEN} get pods -A"
+          sh "kubectl get pods -A"
           sh "helm ls -A"
         }
-      }
     }
   }
 }
