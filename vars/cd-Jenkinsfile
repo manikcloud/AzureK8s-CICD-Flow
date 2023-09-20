@@ -7,8 +7,6 @@ pipeline {
         apiVersion: v1
         kind: Pod
         spec:
-          serviceAccountName: jenkins
-          automountServiceAccountToken: false
           restartPolicy: Never
           containers:
             - name: devops-tools
@@ -23,9 +21,11 @@ pipeline {
   stages {
     stage('kubctl-test') {
       steps {
-          sh "kubectl get pods -A"
+        withCredentials([string(credentialsId: "default-ns-token", variable: 'TOKEN')]) {
+          sh "kubectl --token=${TOKEN} get pods -A"
           sh "helm ls -A"
         }
+      }
     }
   }
 }
