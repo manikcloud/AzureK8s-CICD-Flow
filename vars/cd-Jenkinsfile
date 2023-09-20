@@ -7,7 +7,7 @@ pipeline {
         apiVersion: v1
         kind: Pod
         spec:
-          serviceAccountName: sa-jenkins
+          serviceAccountName: jenkins
           automountServiceAccountToken: false
           restartPolicy: Never
           containers:
