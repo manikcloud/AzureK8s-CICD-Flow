@@ -9,13 +9,20 @@ pipeline {
         spec:
           restartPolicy: Never
           containers:
-            - name: docker
-              image: azurecicd.azurecr.io/docker:dind-az
-              imagePullPolicy: Always
-              securityContext:
-                privileged: true
+            - name: devops-tools
+              image: azurecicd.azurecr.io/ubuntu-kubectl-helm:latest
+              imagePullPolicy: IfNotPresent
       '''
-      defaultContainer 'docker'
+      defaultContainer 'devops-tools'
     }
   }
-  
+
+  stages {
+    stage('kubctl-test') {
+      steps {
+        sh "kubectl get pods -A"
+        sh "helm ls -A"
+      }
+    }
+  }
+}
