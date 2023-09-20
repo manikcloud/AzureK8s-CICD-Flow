@@ -7,6 +7,8 @@ pipeline {
         apiVersion: v1
         kind: Pod
         spec:
+          serviceAccountName: sa-default
+          automountServiceAccountToken: false
           restartPolicy: Never
           containers:
             - name: devops-tools
@@ -23,7 +25,7 @@ pipeline {
       steps {
         withCredentials([string(credentialsId: "default-ns-token", variable: 'TOKEN')]) {
           sh "kubectl --token=${TOKEN} get pods -A"
-          sh "helm ls --token=${TOKEN} -A"
+          sh "helm ls -A"
         }
       }
     }
