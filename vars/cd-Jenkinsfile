@@ -22,8 +22,7 @@ pipeline {
     stage('kubctl-test') {
       steps {
         withCredentials([string(credentialsId: "default-ns-token", variable: 'TOKEN')]) {
-          sh "kubectl --token=${TOKEN} get pods -A"
-          sh "helm ls -A"
+          sh "kubectl --token=${TOKEN} rollout restart deploy prd-service"
         }
       }
     }
