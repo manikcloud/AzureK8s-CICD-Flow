@@ -11,6 +11,7 @@ pipeline {
           containers:
             - name: devops-tools
               image: azurecicd.azurecr.io/ubuntu-kubectl-helm:latest
+              command: ["tail", "-f", "/dev/null"]
               imagePullPolicy: IfNotPresent
       '''
       defaultContainer 'devops-tools'
