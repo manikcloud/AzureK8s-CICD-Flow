@@ -10,7 +10,7 @@ pipeline {
           restartPolicy: Never
           containers:
             - name: maven
-              image: azurecicd.azurecr.io/maven:test
+              image: azurecicd.azurecr.io/maven:3.8.1-openjdk-11-slim
               command: ["tail", "-f", "/dev/null"]
               imagePullPolicy: IfNotPresent
             - name: docker
