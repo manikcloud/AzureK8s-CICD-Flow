@@ -24,6 +24,7 @@ pipeline {
         withCredentials([string(credentialsId: "default-ns-token", variable: 'TOKEN')]) {
           sh "kubectl --token=${TOKEN} rollout restart deploy prd-java-calc -n default"
           sh "helm ls -A"
+          sh "helm delete prd-java-calc"
         }
       }
     }
