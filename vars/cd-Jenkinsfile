@@ -23,6 +23,7 @@ pipeline {
       steps {
         withCredentials([string(credentialsId: "default-ns-token", variable: 'TOKEN')]) {
           sh "kubectl --token=${TOKEN} rollout restart deploy prd-service -n default"
+          sh "helm ls -A --token=${TOKEN}"
         }
       }
     }
