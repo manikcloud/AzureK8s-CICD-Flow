@@ -4,6 +4,76 @@
 
 This repository provides an end-to-end solution for automating Continuous Integration and Continuous Deployment (CI/CD) in a Kubernetes environment on Azure. It leverages Terraform for infrastructure as code, Docker for containerization, Helm for package management, and includes Jenkins pipeline configurations for CI/CD workflows.
 
+## Getting Started
+
+### Prerequisites
+
+- Terraform v1.x
+- Azure CLI
+- Docker
+- Helm
+- Kubernetes CLI (kubectl)
+
+### Clone the Repository
+
+To clone the repository, run the following command:
+
+```
+git clone https://github.com/manikcloud/AzureK8s-CICD-Flow
+```
+
+### Deployment Steps
+
+1. **Initialize Terraform**: Navigate to the `terraform-root` directory to initialize and apply the Terraform configuration:
+
+
+```
+git clone https://github.com/manikcloud/Azure-k8s-infra-ops/
+```
+    ```
+
+    cd Azure-k8s-infra-ops/terraform
+    terraform init
+    terraform apply
+    ```
+
+2. **Build Docker Images**: You can build the Docker images from the `images` directory:
+
+    ```
+
+    cd ../images
+    docker build -t your-image-name .
+    ```
+
+3. **Deploy Helm Chart**: To deploy Helm charts, go to the `golden-chart` directory and run:
+
+    ```
+
+    helm install your-release-name .
+    ```
+
+4. **Apply RBAC Configurations**: Navigate to `rbac-permission` and apply the YAML configuration:
+
+    ```
+
+    kubectl apply -f sa-permission.yaml
+    ```
+
+### Directory and File Summary
+
+- `app_values`: Contains value files (`values.yaml`) for specific applications like `java-calc` and `service`.
+  
+- `golden-chart`: Houses the Golden Helm chart along with templates and value files, standardizing Kubernetes deployments.
+
+- `images`: Contains Dockerfiles for building various images, such as devops-tools, Docker images for Debian, and Maven.
+
+- `rbac-permission`: Scripts and YAML configurations to set up Kubernetes RBAC permissions.
+
+- `resources`: Additional resource configurations like `pod.yaml`.
+
+- `vars`: Houses Jenkinsfile configurations for both Continuous Integration (`ci-Jenkinsfile`) and Continuous Deployment (`cd-Jenkinsfile`).
+
+
 ## Features
 
 ### Terraform Automation
@@ -35,20 +105,3 @@ CI/CD pipelines configured through Jenkinsfiles that handle building, testing, a
 
 6. **Monitoring and Logging**: Azure's native monitoring solutions can be used to keep track of your applications and services running in AKS.
 
-## Getting Started
-
-### Prerequisites
-
-- Terraform v1.x
-- Azure CLI
-- Docker
-- Helm
-- Kubernetes CLI (kubectl)
-
-### Clone the Repository
-
-To clone the repository, run the following command:
-
-```
-git clone https://github.com/manikcloud/AzureK8s-CICD-Flow
-```
