@@ -1,3 +1,9 @@
+// Configure Kubernetes agent for the pipeline
+// Inherit common settings from 'jenkins-jenkins-agent' configuration
+// Set the idle time limit for agent pod termination
+// Provide custom YAML for the pod
+// Define default container for running pipeline tasks
+
 pipeline {
   agent {
     kubernetes {
@@ -17,6 +23,10 @@ pipeline {
       defaultContainer 'devops-tools'
     }
   }
+
+// Stage to checkout code from Git repository
+// Stage to build the project using Maven
+// Stage to build and push the Docker image
 
   stages {
     stage('kubctl-test') {
