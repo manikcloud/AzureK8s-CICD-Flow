@@ -10,15 +10,17 @@ pipeline {
       inheritFrom 'jenkins-jenkins-agent'
       idleMinutes 5
       yaml '''
-        apiVersion: v1
-        kind: Pod
-        spec:
-          restartPolicy: Never
-          containers:
-            - name: devops-tools
-              image: azurecicd.azurecr.io/ubuntu-kubectl-helm:latest
-              command: ["tail", "-f", "/dev/null"]
-              imagePullPolicy: IfNotPresent
+apiVersion: v1
+kind: Pod
+spec:
+  restartPolicy: Never
+  containers:
+    - name: docker
+      image: aksacrops.azurecr.io/dind-azcli:v1
+      imagePullPolicy: IfNotPresent
+      securityContext:
+        privileged: true
+
       '''
       defaultContainer 'devops-tools'
     }
